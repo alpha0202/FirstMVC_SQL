@@ -1,3 +1,7 @@
+using FirstMVC_SQL.Data;
+using System.Data;
+using System.Data.SqlClient;
+
 namespace FirstMVC_SQL
 {
     public class Program
@@ -8,6 +12,14 @@ namespace FirstMVC_SQL
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            var dbConnectionString = builder.Configuration.GetConnectionString("conexionPredeterminada");
+            builder.Services.AddSingleton<IDbConnection>((sp) => new SqlConnection(dbConnectionString));
+
+            //inyeccción mi propio dependencia
+            builder.Services.AddScoped<IContactsRepository, ContactsRepository>();
+
+
 
             var app = builder.Build();
 
