@@ -66,6 +66,7 @@ namespace FirstMVC_SQL.Controllers
         // GET: ContactsController/Edit/5
         public async Task<ActionResult> Edit(int id)
         {
+
             var contact = await _contactsRepository.GetDetails(id);
             return View(contact);
         }
@@ -73,10 +74,21 @@ namespace FirstMVC_SQL.Controllers
         // POST: ContactsController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public async Task<ActionResult> Edit(int id, IFormCollection collection)
         {
             try
             {
+
+                var contact = new Contact()
+                {
+                    FirstName = collection["FirstName"],
+                    LastName = collection["LastName"],
+                    Phone = collection["Phone"],
+                    Address = collection["Address"]
+                };
+
+                await _contactsRepository.Update(contact);
+               
                 return RedirectToAction(nameof(Index));
             }
             catch
@@ -86,18 +98,24 @@ namespace FirstMVC_SQL.Controllers
         }
 
         // GET: ContactsController/Delete/5
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+
+            var contact = await _contactsRepository.GetDetails(id);
+
+            return View(contact);
         }
 
         // POST: ContactsController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public async Task<ActionResult> Delete(int id, IFormCollection collection)
         {
             try
             {
+
+                await _contactsRepository.Delete(id);
+
                 return RedirectToAction(nameof(Index));
             }
             catch

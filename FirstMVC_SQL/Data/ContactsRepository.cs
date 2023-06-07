@@ -24,10 +24,12 @@ namespace FirstMVC_SQL.Data
         {
             var sql = @"select Id, FirstName, LastName, Phone, Address 
                         from Contacts
-                        where Id = @Id    ";
+                        where Id = @Id ";
 
             return await _dbconnection.QueryFirstOrDefaultAsync<Contact>(sql, new { Id = id});
         }
+       
+        
         public async Task Insert(Contact contact)
         {
             var sql = @" insert into Contacts(FirstName, LastName, Phone, Address)
@@ -40,6 +42,7 @@ namespace FirstMVC_SQL.Data
                contact.Address              
                 });
         }
+
         public async Task Update(Contact contact)
         {
             var sql = @" update Contacts 
@@ -58,6 +61,7 @@ namespace FirstMVC_SQL.Data
                 contact.Address
             });
         }
+
         public async Task Delete(int id)
         {
             var sql = @"delete from Contacts where Id = @Id";
