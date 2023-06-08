@@ -81,6 +81,7 @@ namespace FirstMVC_SQL.Controllers
 
                 var contact = new Contact()
                 {
+                    Id = int.Parse(collection["id"]),
                     FirstName = collection["FirstName"],
                     LastName = collection["LastName"],
                     Phone = collection["Phone"],
